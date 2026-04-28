@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5f;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
-    public float mouseSensitivity = 200f;
+    public float mouseSensitivity = 2f;
 
     public Transform playerCamera;
 
@@ -24,8 +24,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         // Mouse look
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
         transform.Rotate(Vector3.up * mouseX);
 
