@@ -3,7 +3,9 @@ guid: f8ef35cebdb8b468eb4180e5e6f5e4ef
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - spawner: {instanceID: 0}
+  - betterGunPrefab: {fileID: 5786097810451525583, guid: d01708b8e1d9ec847a6ec503c28241c6, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

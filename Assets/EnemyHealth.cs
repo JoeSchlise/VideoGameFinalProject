@@ -7,6 +7,9 @@ public class EnemyHealth : MonoBehaviour
     public int health = 3;
     public ZombieSpawner spawner;
 
+    public GameObject betterGunPrefab;  
+    public float dropChance = 0.1f;     
+
     public void TakeDamage(int damage)
     {
         health -= damage;
@@ -14,12 +17,26 @@ public class EnemyHealth : MonoBehaviour
 
         if (health <= 0)
         {
-            if (spawner != null)
-            {
-                spawner.ZombieDied();
-            }
-
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    void Die()
+    {
+        if (Random.value <= dropChance)
+        {
+            Instantiate(
+                betterGunPrefab,
+                transform.position + Vector3.up * 1f,
+                Quaternion.identity
+            );
+        }
+
+        if (spawner != null)
+        {
+            spawner.ZombieDied();
+        }
+
+        Destroy(gameObject);
     }
 }

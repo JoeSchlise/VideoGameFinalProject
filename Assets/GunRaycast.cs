@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GunRaycast : MonoBehaviour
@@ -11,18 +9,55 @@ public class GunRaycast : MonoBehaviour
     public float range = 300f;
     public int damage = 1;
 
+    public bool isAutomatic = false;   // 🔥 NEW
+    public float fireRate = 10f;       // bullets per second
+
+    private float nextFireTime = 0f;
+
+    void Start()
+    {
+        if (playerCamera == null)
+        {
+            playerCamera = Camera.main;
+        }
+    }
+
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (isAutomatic)
         {
-            Shoot();
+            // HOLD to fire
+            if (Input.GetMouseButton(0) && Time.time >= nextFireTime)
+            {
+                nextFireTime = Time.time + 1f / fireRate;
+                Shoot();
+            }
+        }
+        else
+        {
+            // CLICK to fire
+            if (Input.GetMouseButtonDown(0))
+            {
+                Shoot();
+            }
         }
     }
 
     void Shoot()
     {
-        // Visual bullet only
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, playerCamera.transform.rotation);
+       
+        if (playerCamera == null || firePoint == null || bulletPrefab == null)
+        {
+            Debug.LogWarning("GunRaycast missing setup on " + gameObject.name);
+            return;
+        }
+
+        GameObject bullet = Instantiate(
+            bulletPrefab,
+            firePoint.position,
+            playerCamera.transform.rotation
+        );
+
         bullet.transform.Rotate(0, 90, 0);
         Destroy(bullet, 1f);
 
